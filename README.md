@@ -1,13 +1,13 @@
 # Toggler
 A simple and powerful toggle switch for checkbox written in Pure JS.
 
-## Note:- https://github.com/AnkitSharmaOnGithub/Toggler/blob/master/main.js
+## Note:-
 
-##### Just import the Js File from the Link :- 
+##### Just copy the Js File from the Link :- https://raw.githubusercontent.com/AnkitSharmaOnGithub/Toggler/master/main.js
 
+and include it in your html file.
 
-
-And add an checkbox with the following Options :- 
+Create an page And add a checkbox with the following Options :- 
 
 1)type = "checkbox" [Required]
 
@@ -17,5 +17,7 @@ And add an checkbox with the following Options :-
 
 4)t_color = "<color name/Hex Code/RGB>" [optional]
 
-
-For exapmle : - <input type="checkbox" class="toggle-default" text="0" t_color="red"/>
+For exapmle : -
+```html
+ <input type="checkbox" class="toggle-default" text="0" t_color="red"/>
+```
