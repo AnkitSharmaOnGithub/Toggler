@@ -3,7 +3,7 @@ A simple and powerful toggle switch for checkbox written in Pure JS.
 
 ## Note:- 
 
-Just import the Js File from the Link :- 
+##### Just import the Js File from the Link :- 
 
 
 
