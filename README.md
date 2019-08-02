@@ -1,7 +1,7 @@
 # Toggler
 A simple and powerful toggle switch for checkbox written in Pure JS.
 
-Note:- 
+## Note:- 
 
 Just import the Js File from the Link :- 
 
