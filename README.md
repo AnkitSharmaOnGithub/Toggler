@@ -17,7 +17,7 @@ Create an page And add a checkbox with the following Options :-
 
 4)t_color = "<color name/Hex Code/RGB>" [optional]
 
-For exapmle : -
+For example : -
 ```html
  <input type="checkbox" class="toggle-default" text="0" t_color="red"/>
 ```
