@@ -48,7 +48,7 @@ document.querySelector('.slider1').style.backgroundColor = trigger_color;
  var makeToggle = {
    create: function(toggle, options) {
      for (x of toggle) {
-       console.log(toggle.item(this));
+      //  console.log(toggle.item(this));
        var el = toggle.item(this);
        el.style.opacity = 0;
 
@@ -63,23 +63,25 @@ document.querySelector('.slider1').style.backgroundColor = trigger_color;
        el.nextElementSibling.style.backgroundColor = "#ccc";
        el.nextElementSibling.style.width = "78px";
        el.nextElementSibling.style.height = "34px";
+       
 
        //Slider:Before Css
        document
          .querySelector(el.nodeName)
          .addEventListener("change", function() {
            if (this.checked == true) {
-             console.log(el.nextElementSibling);
+            //  console.log(el.nextElementSibling);
 
              //Check if CheckBox and Slider is in Focus
              if(this == document.activeElement){
                el.nextElementSibling.style.boxShadow  = "0 0 1px #2196f3";
-               console.log('Tera Bhai kisse Kam Hai! Tere Bhai mein bhi dum Hai.');
+              //  console.log('Tera Bhai kisse Kam Hai! Tere Bhai mein bhi dum Hai.');
              }
 
              //Change BackGround Colour and Shift the Trigger
              el.nextElementSibling.style.backgroundColor = "#2196f3";
              document.querySelector('.slider1').style.transform = "translateX(44px)";
+             document.querySelector('.slider1').style.transitionDuration = "1s";
            } else {
 
              //Check if CheckBox and Slider are "NOT" in Focus
@@ -98,6 +100,7 @@ document.querySelector('.slider1').style.backgroundColor = trigger_color;
        trigger.width = "24px";
        trigger.height = "24px";
        trigger.margin = "4px";
+       
 
      }
    }
