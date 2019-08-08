@@ -7,7 +7,7 @@ A simple and powerful toggle switch for checkbox written in Pure JS.(Under Devel
 
 ##### Just copy the Js File from the Link :- https://raw.githubusercontent.com/AnkitSharmaOnGithub/Toggler/master/main.js
 
-and include it in your html file.
+and include it in your html file
 
 Create an page And add a checkbox with the following Options :- 
 
