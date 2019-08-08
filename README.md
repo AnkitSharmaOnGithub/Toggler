@@ -13,7 +13,7 @@ Create an page And add a checkbox with the following Options :-
 
 1)type = "checkbox" [Required]
 
-2)class = "toggle-default" [optional]
+2)class = "toggle-default","toggle-small","checked" [optional]
 
 3)text = "<Only one character>" [optional]
 
