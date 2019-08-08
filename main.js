@@ -1,118 +1,135 @@
- //Pure Js Library By Ankit Sharma
- //Warning :- Do not copy until you have authority to do so. (:D
- 
- //Declare Constants
+//Pure Js Library By Ankit Sharma
+//Warning :- Do not copy until you have authority to do so. (:D
 
- const checkbox_display = "none";
- const toggle_height = 34;
- const toggle_width = 78;
- const slider_bg = "#ccc";
- const cursor = "pointer";
- const before_height = 26;
- const before_width = 26;
+window.addEventListener('DOMContentLoaded', function() {
 
- const before_left = 4;
- const before_bottom = 4;
- const before_bg = "white";
+//Slider Options
+let slider_position  = "absolute";
+let slider_height = "34px";
+let slider_width = "78px";
+let slider_bg = "#ccc";
+let slider_on_bg = "#2196f3";
+let slider_shadow = "0 0 1px #2196f3";
+let cursor = "pointer";
 
- //Fetched all CheckBoxes
- var toggles = document.getElementsByTagName("input");
+//Trigger Options
+let trigger_position = "absolute";
+let trigger_height = "24px";
+let trigger_width = "24px";
+let trigger_left = "4px";
+let trigger_bottom = "4px";
+let trigger_margin = "4px";
+let trigger_bg = "#ffffff";
+let trigger_trasition = "translateX(44px)";
+let transitionDuration = "1s";
+let trigger_deactivated_transition = "translateX(0px)";
 
- //Check if text exists
- if(document.querySelector('input').hasAttribute('text'))
- {
-    //Fetch  text from Trigger
-    var trigger_text = document.querySelector('input').getAttribute('text');
+var switches = {};
+var toggles = {
+  "toggle-default": {
+   
+  },
+  "toggle-small":{
+    slider_width : "60px",
+    slider_height : "25px",
+    trigger_width : "17px",
+    trigger_height : "17px",
+    trigger_trasition : "translateX(36px)",
+  }
+};
 
-    //Place text inside Trigger
-document.querySelector('.slider1').style.borderRadius = "2.5em";
-document.querySelector('.slider1').style.textAlign = "center";
-document.querySelector('.slider1').style.color = "#ffffff";
-document.querySelector('.slider1').textContent = trigger_text;
- }
+var Switch = function(el, options) {
+  if (el !== undefined || options !== undefined) {
+    this._init(el, options);
+  }
+};
+
+Switch.prototype._init = function(el, options) {
+  //Constant Variables
+
+  let defaultOptions = {
+
+    sliderOptions : {
+        position : slider_position,
+        cursor : cursor,
+        backgroundColor : slider_bg,
+        width :  options.slider_width == undefined ? slider_width :options.slider_width,
+        height : options.slider_height == undefined ? slider_height :options.slider_height,
+    },
+
+    TriggerOptions : {
+        trigger_width : options.trigger_width == undefined ? trigger_width :options.trigger_width,
+        trigger_height : options.trigger_height == undefined ? trigger_height :options.trigger_height,
+        boxShadow : slider_shadow,
+        trigger_trasition : options.trigger_trasition == undefined ? trigger_trasition :options.trigger_trasition,
+        transitionDuration : transitionDuration,
+    },
+
+    //Slider
+    
+
+  };
+  console.log(defaultOptions.sliderOptions.width);
+  el.style.opacity = 0;
+
+  el.addEventListener('change', function(){
+      isChecked(this,defaultOptions.TriggerOptions);
+  });
+
+  setSlider(el,defaultOptions.sliderOptions);
+  setTrigger(el,defaultOptions.TriggerOptions);
+};
+  
 
 
- //Check if color exists
- if(document.querySelector('input').hasAttribute('t_color'))
- {
-//Fetch Color from Trigger t_color
-var trigger_color = document.querySelector('input').getAttribute('t_color');
-// console.log(trigger_color);
- 
- //Set color of Trigger
-document.querySelector('.slider1').style.backgroundColor = trigger_color;
- }
+//   SetSlider Function
+  function setSlider(element, sliderOptions){
+    var slider = element.nextElementSibling.style;
+    slider.position = sliderOptions.position;
+    slider.cursor = sliderOptions.cursor;
+    slider.backgroundColor = slider_bg;
+    slider.width = sliderOptions.width;
+    slider.height = sliderOptions.height;
+  }
 
- //Creating Toggels Function
+  //SetTrigger Function
+  function setTrigger(element, TriggerOptions){
+    var Trigger = element.parentElement.lastElementChild.style;
+    Trigger.position = trigger_position;
+    Trigger.cursor = cursor;
+    Trigger.backgroundColor = trigger_bg;
+    Trigger.width = TriggerOptions.trigger_width;
+    Trigger.height = TriggerOptions.trigger_height;
+    Trigger.margin = trigger_margin;
+  }
 
- var makeToggle = {
-   create: function(toggle, options) {
-     for (x of toggle) {
-      //  console.log(toggle.item(this));
-       var el = toggle.item(this);
-       el.style.opacity = 0;
+  //SetCheckedProperties Function
 
-       //Toggle Css
-       el.parentNode.style.position = "relative";
-       el.parentNode.style.height = toggle_height + "px";
-       el.parentNode.style.width = toggle_width + "px";
+  function isChecked(element,options){
+    console.log(options);
+    var Trigger = element.parentElement.lastElementChild.style;
 
-       //Slider Css
-       el.nextElementSibling.style.position = "absolute";
-       el.nextElementSibling.style.cursor = "pointer";
-       el.nextElementSibling.style.backgroundColor = "#ccc";
-       el.nextElementSibling.style.width = "78px";
-       el.nextElementSibling.style.height = "34px";
-       
+    if(element.checked){
+        if(element == document.activeElement){
+            element.nextElementSibling.style.boxShadow  = slider_shadow;
+            element.nextElementSibling.style.backgroundColor = slider_on_bg;
+            Trigger.transform = options.trigger_trasition;
+            Trigger.transitionDuration = transitionDuration;
+        }
+    }
+    else{
+        if(this != document.activeElement){
+            element.nextElementSibling.style.boxShadow  = " ";
+          
+          element.nextElementSibling.style.backgroundColor = slider_bg;
+          Trigger.transform = trigger_deactivated_transition;
+        }
+    }
+  }
 
-       //Slider:Before Css
-       document
-         .querySelector(el.nodeName)
-         .addEventListener("change", function() {
-           if (this.checked == true) {
-            //  console.log(el.nextElementSibling);
+Object.keys(toggles).forEach(function(key) {
+  switches[key] = new Switch(document.querySelector("." + key), toggles[key]);
+});
 
-             //Check if CheckBox and Slider is in Focus
-             if(this == document.activeElement){
-               el.nextElementSibling.style.boxShadow  = "0 0 1px #2196f3";
-              //  console.log('Tera Bhai kisse Kam Hai! Tere Bhai mein bhi dum Hai.');
-             }
 
-             //Change BackGround Colour and Shift the Trigger
-             el.nextElementSibling.style.backgroundColor = "#2196f3";
-             document.querySelector('.slider1').style.transform = "translateX(44px)";
-             document.querySelector('.slider1').style.transitionDuration = "1s";
-           } else {
-
-             //Check if CheckBox and Slider are "NOT" in Focus
-             if(this != document.activeElement){
-               el.nextElementSibling.style.boxShadow  = "";
-             }
-             el.nextElementSibling.style.backgroundColor = "#cccccc";
-             document.querySelector('.slider1').style.transform = "translateX(0px)";
-           }
-         });
-
-       //Setting Switch Trigger Display
-
-       var trigger = document.querySelector('.slider1').style;
-       trigger.position = "absolute";
-       trigger.width = "24px";
-       trigger.height = "24px";
-       trigger.margin = "4px";
-       
-
-     }
-   }
- };
-
- //Passed options and CheckBoxes for creation
- for (x of toggles) {
-   var class_name = x.getAttribute("class");
-
-   let options = {
-     class_name: class_name,
-     display: checkbox_display
-   };
-   makeToggle.create(toggles, options);
- }
+});
