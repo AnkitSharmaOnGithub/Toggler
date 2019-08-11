@@ -28,6 +28,8 @@ window.addEventListener("DOMContentLoaded", function() {
   let trigger_trasition = "translateX(44px)";
   let transitionDuration = "1s";
   let trigger_deactivated_transition = "translateX(0px)";
+  let trigger_on_text = "";
+  let trigger_off_text = "";
   
 
   var switches = {};
@@ -49,7 +51,17 @@ window.addEventListener("DOMContentLoaded", function() {
       trigger_height: "34px",
       trigger_margin : "0px",
       trigger_boxShadow: '0 1px 3px rgba(0,0,0,.4)',
-    }
+    },
+    withText : {
+    	trigger_on_text : "O",
+    	trigger_off_text : "X",
+    	borderRadius : '20px',
+      trigger_width: "34px",
+      trigger_height: "34px",
+      trigger_margin : "0px",
+      trigger_boxShadow: '0 1px 3px rgba(0,0,0,.4)',
+
+    },
   };
 
   var Switch = function(el, options) {
@@ -108,6 +120,15 @@ window.addEventListener("DOMContentLoaded", function() {
         trigger_margin : options.trigger_margin == undefined
         ? trigger_margin
         : options.trigger_margin,
+
+        trigger_on_text : options.trigger_on_text == undefined
+        ? trigger_on_text
+        : options.trigger_on_text,
+
+        trigger_off_text : options.trigger_off_text == undefined
+        ? trigger_off_text
+        : options.trigger_off_text,
+        
       }
 
       //Slider
@@ -131,7 +152,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   //Set CheckBox options
   function setCheckbox(element, Options) {
-    console.log(Options);
+    // console.log(Options);
     is_checked = Options.is_checked == undefined ? " " : "checked";
     element.setAttribute("checked", is_checked);
   }
@@ -149,7 +170,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   //SetTrigger Function
   function setTrigger(element, TriggerOptions) {
-    console.log(TriggerOptions.trigger_boxShadow);
+    // console.log(TriggerOptions.trigger_boxShadow);
     var Trigger = element.parentElement.lastElementChild.style;
     Trigger.position = trigger_position;
     Trigger.cursor = cursor;
@@ -159,27 +180,48 @@ window.addEventListener("DOMContentLoaded", function() {
     Trigger.margin = TriggerOptions.trigger_margin;
     Trigger.borderRadius = TriggerOptions.borderRadius;
     Trigger.boxShadow = TriggerOptions.trigger_boxShadow;
+    if(TriggerOptions.trigger_off_text != "")
+    {	
+    	Trigger.textAlign = "center";
+    	Trigger.lineHeight =  "34px";
+    	element.parentElement.lastElementChild.textContent = TriggerOptions.trigger_off_text;
+
+    }
   }
 
   //SetCheckedProperties Function
 
   function isChecked(element, options) {
-    console.log(options);
+    // console.log(options);
     var Trigger = element.parentElement.lastElementChild.style;
 
     if (element.checked) {
-      // if (element == document.activeElement) {
         element.nextElementSibling.style.boxShadow = slider_shadow;
         element.nextElementSibling.style.backgroundColor = slider_on_bg;
         Trigger.transform = options.trigger_trasition;
         Trigger.transitionDuration = transitionDuration;
-      // }
+
+        if(options.trigger_on_text != "")
+	    {	
+	    	Trigger.textAlign = "center";
+	    	Trigger.lineHeight =  "34px";
+	    	element.parentElement.lastElementChild.textContent = options.trigger_on_text;
+
+	    }
     } else {
       // if (this != document.activeElement) {
         element.nextElementSibling.style.boxShadow = null;
 
         element.nextElementSibling.style.backgroundColor = slider_bg;
         Trigger.transform = trigger_deactivated_transition;
+
+        if(options.trigger_off_text != "")
+	    {	
+	    	Trigger.textAlign = "center";
+	    	Trigger.lineHeight =  "34px";
+	    	element.parentElement.lastElementChild.textContent = options.trigger_off_text;
+
+	    }
       // }
     }
   }
