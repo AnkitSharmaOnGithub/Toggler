@@ -4,6 +4,7 @@
 window.addEventListener("DOMContentLoaded", function() {
   //CheckBox Options
   let is_checked = " ";
+  let is_disabled = " ";
 
   //Slider Options
   let slider_position = "absolute";
@@ -30,7 +31,6 @@ window.addEventListener("DOMContentLoaded", function() {
   let trigger_deactivated_transition = "translateX(0px)";
   let trigger_on_text = "";
   let trigger_off_text = "";
-  
 
   var switches = {};
   var toggles = {
@@ -42,30 +42,40 @@ window.addEventListener("DOMContentLoaded", function() {
       trigger_height: "17px",
       trigger_trasition: "translateX(36px)"
     },
-    checked: {
-      is_checked: "checked",
+    "checked": {
+      is_checked: "checked"
     },
-    rounded : {
-      borderRadius : '20px',
+    "rounded": {
+      borderRadius: "20px",
       trigger_width: "34px",
       trigger_height: "34px",
-      trigger_margin : "0px",
-      trigger_boxShadow: '0 1px 3px rgba(0,0,0,.4)',
+      trigger_margin: "0px",
+      trigger_boxShadow: "0 1px 3px rgba(0,0,0,.4)"
     },
-    withText : {
-    	trigger_on_text : "O",
-    	trigger_off_text : "X",
-    	borderRadius : '20px',
+    "withText": {
+      trigger_on_text: "O",
+      trigger_off_text: "X",
+      borderRadius: "20px",
       trigger_width: "34px",
       trigger_height: "34px",
-      trigger_margin : "0px",
-      trigger_boxShadow: '0 1px 3px rgba(0,0,0,.4)',
+      trigger_margin: "0px",
+      trigger_boxShadow: "0 1px 3px rgba(0,0,0,.4)"
+    },
+    "colored": {
+      slider_color: "#004bf5",
+      trigger_color: "#f36c0c"
+    },
 
+    "disabled": {
+      is_disabled : "disabled",
     },
-     colored : {
-       slider_color : "#004bf5",
-       trigger_color : "#f36c0c",
-     }
+
+    // "API": {},
+
+    // destroy: {},
+    "remove": {
+      remove_status : true,
+    }
   };
 
   var Switch = function(el, options) {
@@ -91,13 +101,13 @@ window.addEventListener("DOMContentLoaded", function() {
             ? slider_height
             : options.slider_height,
 
-        borderRadius : options.borderRadius == undefined
-        ? slider_border_radius
-        : options.borderRadius,
+        borderRadius:
+          options.borderRadius == undefined
+            ? slider_border_radius
+            : options.borderRadius,
 
-        slider_bg : options.slider_color == undefined
-        ? slider_bg
-        : options.slider_color,
+        slider_bg:
+          options.slider_color == undefined ? slider_bg : options.slider_color
       },
 
       TriggerOptions: {
@@ -109,62 +119,84 @@ window.addEventListener("DOMContentLoaded", function() {
           options.trigger_height == undefined
             ? trigger_height
             : options.trigger_height,
-        trigger_boxShadow: options.trigger_boxShadow == undefined
-        ? trigger_boxShadow
-        : options.trigger_boxShadow,
+        trigger_boxShadow:
+          options.trigger_boxShadow == undefined
+            ? trigger_boxShadow
+            : options.trigger_boxShadow,
         trigger_trasition:
           options.trigger_trasition == undefined
             ? trigger_trasition
             : options.trigger_trasition,
         transitionDuration: transitionDuration,
-        borderRadius : options.borderRadius == undefined
-        ? trigger_border_radius
-        : options.borderRadius,
+        borderRadius:
+          options.borderRadius == undefined
+            ? trigger_border_radius
+            : options.borderRadius,
 
-        boxShadow : options.boxShadow == undefined
-        ? trigger_boxShadow
-        : options.boxShadow,
+        boxShadow:
+          options.boxShadow == undefined
+            ? trigger_boxShadow
+            : options.boxShadow,
 
-        trigger_margin : options.trigger_margin == undefined
-        ? trigger_margin
-        : options.trigger_margin,
+        trigger_margin:
+          options.trigger_margin == undefined
+            ? trigger_margin
+            : options.trigger_margin,
 
-        trigger_on_text : options.trigger_on_text == undefined
-        ? trigger_on_text
-        : options.trigger_on_text,
+        trigger_on_text:
+          options.trigger_on_text == undefined
+            ? trigger_on_text
+            : options.trigger_on_text,
 
-        trigger_off_text : options.trigger_off_text == undefined
-        ? trigger_off_text
-        : options.trigger_off_text,
+        trigger_off_text:
+          options.trigger_off_text == undefined
+            ? trigger_off_text
+            : options.trigger_off_text,
 
-        trigger_bg : options.trigger_color == undefined
-        ? trigger_bg
-        : options.trigger_color,
-        
+        trigger_bg:
+          options.trigger_color == undefined
+            ? trigger_bg
+            : options.trigger_color
       }
 
       //Slider
     };
-    
-    el.style.opacity = 0;
+    if(options.is_disabled != undefined)
+    {
+      el.disabled = options.is_disabled;
+    }
 
+    if(options.remove_status == true)
+    {
+      el.style.opacity = 0;
+      el.nextElementSibling.style.opacity = 0;
+      el.nextElementSibling.style.opacity = 0;
+    }
   
+    el.style.opacity = 0;
+    
     el.addEventListener("change", function() {
-      isChecked(this, defaultOptions.TriggerOptions,defaultOptions.sliderOptions);
+      isChecked(
+        this,
+        defaultOptions.TriggerOptions,
+        defaultOptions.sliderOptions
+      );
     });
 
-    
     setSlider(el, defaultOptions.sliderOptions);
     setTrigger(el, defaultOptions.TriggerOptions);
     if (options.is_checked != undefined) {
       setCheckbox(el, options);
-      isChecked(el, defaultOptions.TriggerOptions,defaultOptions.sliderOptions);
+      isChecked(
+        el,
+        defaultOptions.TriggerOptions,
+        defaultOptions.sliderOptions
+      );
     }
   };
 
   //Set CheckBox options
   function setCheckbox(element, Options) {
-    // console.log(Options);
     is_checked = Options.is_checked == undefined ? " " : "checked";
     element.setAttribute("checked", is_checked);
   }
@@ -182,7 +214,6 @@ window.addEventListener("DOMContentLoaded", function() {
 
   //SetTrigger Function
   function setTrigger(element, TriggerOptions) {
-    // console.log(TriggerOptions.trigger_bg);
     var Trigger = element.parentElement.lastElementChild.style;
     Trigger.position = trigger_position;
     Trigger.cursor = cursor;
@@ -192,53 +223,62 @@ window.addEventListener("DOMContentLoaded", function() {
     Trigger.margin = TriggerOptions.trigger_margin;
     Trigger.borderRadius = TriggerOptions.borderRadius;
     Trigger.boxShadow = TriggerOptions.trigger_boxShadow;
-    if(TriggerOptions.trigger_off_text != "")
-    {	
-    	Trigger.textAlign = "center";
-    	Trigger.lineHeight =  "34px";
-    	element.parentElement.lastElementChild.textContent = TriggerOptions.trigger_off_text;
-
+    if (TriggerOptions.trigger_off_text != "") {
+      Trigger.textAlign = "center";
+      Trigger.lineHeight = "34px";
+      element.parentElement.lastElementChild.textContent =
+        TriggerOptions.trigger_off_text;
     }
   }
 
   //SetCheckedProperties Function
 
   function isChecked(element, options, SliderOptions) {
-    // console.log(options);
     var Trigger = element.parentElement.lastElementChild.style;
 
     if (element.checked) {
-        element.nextElementSibling.style.boxShadow = slider_shadow;
-        element.nextElementSibling.style.backgroundColor = slider_on_bg;
-        Trigger.transform = options.trigger_trasition;
-        Trigger.transitionDuration = transitionDuration;
+      element.nextElementSibling.style.boxShadow = slider_shadow;
+      element.nextElementSibling.style.backgroundColor = slider_on_bg;
+      Trigger.transform = options.trigger_trasition;
+      Trigger.transitionDuration = transitionDuration;
 
-        if(options.trigger_on_text != "")
-	    {	
-	    	Trigger.textAlign = "center";
-	    	Trigger.lineHeight =  "34px";
-	    	element.parentElement.lastElementChild.textContent = options.trigger_on_text;
-
-	    }
+      if (options.trigger_on_text != "") {
+        Trigger.textAlign = "center";
+        Trigger.lineHeight = "34px";
+        element.parentElement.lastElementChild.textContent =
+          options.trigger_on_text;
+      }
     } else {
       // if (this != document.activeElement) {
-        element.nextElementSibling.style.boxShadow = null;
+      element.nextElementSibling.style.boxShadow = null;
 
-        element.nextElementSibling.style.backgroundColor = SliderOptions.slider_bg;
-        Trigger.transform = trigger_deactivated_transition;
+      element.nextElementSibling.style.backgroundColor =
+        SliderOptions.slider_bg;
+      Trigger.transform = trigger_deactivated_transition;
 
-        if(options.trigger_off_text != "")
-	    {	
-	    	Trigger.textAlign = "center";
-	    	Trigger.lineHeight =  "34px";
-	    	element.parentElement.lastElementChild.textContent = options.trigger_off_text;
-
-	    }
+      if (options.trigger_off_text != "") {
+        Trigger.textAlign = "center";
+        Trigger.lineHeight = "34px";
+        element.parentElement.lastElementChild.textContent =
+          options.trigger_off_text;
+      }
       // }
     }
   }
-  
+
   Object.keys(toggles).forEach(function(key) {
     switches[key] = new Switch(document.querySelector("." + key), toggles[key]);
   });
+
+  //Trigger Actions on button Click
+
+  //   function allocateEventListener(element, event, fn){
+  //   document.getElementById(element).addEventListener(event,fn);
+  //   } 
+
+
+  // allocateEventListener('removeBtn','click',function(){
+  //   new Switch(document.querySelector(".remove"), {"remove_status" : true,});
+  // });
+  
 });
