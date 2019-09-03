@@ -1,5 +1,5 @@
 # Toggler
-A simple and powerful toggle switch for checkbox written in Pure JS.(Under Development:- Version :- 0.1.1)
+A simple and powerful toggle switch for checkbox written in Pure JS & CSS.(Under Development:- Version :- 0.1.1)
 
 ### Demo :- https://ankitsharmaongithub.github.io/Toggler/
 
